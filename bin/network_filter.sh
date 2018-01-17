@@ -1,4 +1,10 @@
-while read line; do
-    arr=($line); net=${arr[0]}; i1=${arr[1]}; i2=${arr[2]}
-    echo "r$i1:eth$i2@10.0.$net.$i1/24 r$i2:eth$i1@10.0.$net.$i2/24"
+for s in $@; do
+    if [ -z "$net" ]; then
+        net=$1
+        pref=10.0.$1
+        str=
+    else
+        str="$str r$s:eth$net@$pref.$s/24"
+    fi
 done
+echo $str
