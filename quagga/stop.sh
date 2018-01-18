@@ -3,18 +3,17 @@ if [ "`whoami`" != "root" ]; then
 fi
 
 path=/var/run/quagga
-while read line; do
-    arr=($line); host=${arr[0]};
-    zebra=$path/${host}_zebra
-    ospfd=$path/${host}_ospfd
-    if [ -z "`ls $zebra.pid 2> /dev/null`" ]; then
-        echo "$host not found"
-    else
-        kill `cat $zebra.pid`
-        kill `cat $ospfd.pid`
-        rm $zebra.pid
-        rm $zebra.vty
-        rm $ospfd.pid
-        rm $ospfd.vty
-    fi
-done
+zebra=$path/$1_zebra
+ospfd=$path/$1_ospfd
+
+if [ -z "`ls $zebra.pid 2> /dev/null`" ]; then
+    echo "router $1 not found"
+    exit 1
+else
+    kill `cat $zebra.pid`
+    kill `cat $ospfd.pid`
+    rm $zebra.pid
+    rm $zebra.vty
+    rm $ospfd.pid
+    rm $ospfd.vty
+fi

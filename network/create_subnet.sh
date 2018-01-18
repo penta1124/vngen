@@ -24,6 +24,6 @@ for arg in $@; do
         ip link set $veth netns brns
         ip netns exec brns ip link set $veth master $br
         ip netns exec brns ip link set $veth up
-        bash set_interface.sh veth0 $arg
+        bash assign_interface.sh veth0 $arg
     fi
 done

@@ -1,17 +1,17 @@
 #!/bin/env bash
 cd `dirname $0`
 
-create_link() {
+create() {
     if [ $# = 3 ]; then
-        echo "sudo bash ../network/link.sh $2 $3"
-        sudo bash ../network/link.sh $2 $3
+        sudo bash ../network/create_link.sh $2 $3 \
+            && echo "create link ($2 $3)"
     else
-        echo "sudo bash ../network/bridge.sh $@"
-        sudo bash ../network/bridge.sh $@
+        sudo bash ../network/create_subnet.sh $@ \
+            && echo "create subnet ($@)"
     fi
 }
 
 cat ../network.txt | while read line; do
     arr=(`echo $line`)
-    create_link br${arr[0]} `bash network_filter.sh $line`
+    create br${arr[0]} `bash network_filter.sh $line`
 done

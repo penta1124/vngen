@@ -8,5 +8,5 @@ fi
 
 cd `dirname $0`
 ip link add veth0 type veth peer name veth1
-bash set_interface.sh veth0 $1
-bash set_interface.sh veth1 $2
+bash assign_interface.sh veth0 $1
+bash assign_interface.sh veth1 $2
